@@ -1,0 +1,35 @@
+name: Deploy static content to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node (optional if building)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Build site (skip if static)
+        run: |
+          # add your build commands here, e.g. npm ci && npm run build
+          echo "No build step configured"
+
+      - name: Deploy to GitHub Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./ # change to your build output folder if needed
